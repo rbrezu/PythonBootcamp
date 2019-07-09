@@ -22,12 +22,12 @@ You can view the files as html or can interact with them using jupyter notebook.
 
 ### 1. Basic Knowledge and Data Types
 
-* **01** [html](html/01_week/01_numbers.html) [notebook](notebooks/01_week/01_numbers.ipynb) Basic data types and operations (numbers, strings) 
-* **02** [html](html/01_week/02_strings.html) [notebook](notebooks/01_week/02_strings.ipynb) String manipulation 
-* **03** [html](html/01_week/03_data1.html) [notebook](notebooks/01_week/03_data1.ipynb) Data structures: Lists and Tuples
-* **04** [html](html/01_week/04_data2.html) [notebook](notebooks/01_week/04_data2.ipynb) Data structures (continued): dictionaries
-* **05** [html](html/01_week/05_flow.html) [notebook](notebooks/01_week/05_flow.ipynb) Control statements: if, for, while, try statements
-* **06** [html](html/01_week/06_functions.html) [notebook](notebooks/01_week/06_functions.ipynb) Functions
+* [**01**](https://nbviewer.jupyter.org/github/rbrezu/PythonBootcamp/blob/master/notebooks/01_week/01_numbers.ipynb) Basic data types and operations (numbers, strings) 
+* [**02**](https://nbviewer.jupyter.org/github/rbrezu/PythonBootcamp/blob/master/notebooks/01_week/02_strings.ipynb) String manipulation 
+* [**03**](https://nbviewer.jupyter.org/github/rbrezu/PythonBootcamp/blob/master/notebooks/01_week/03_data1.ipynb) Data structures: Lists and Tuples
+* [**04**](https://nbviewer.jupyter.org/github/rbrezu/PythonBootcamp/blob/master/notebooks/01_week/04_data2.ipynb) Data structures (continued): dictionaries
+* [**05**](https://nbviewer.jupyter.org/github/rbrezu/PythonBootcamp/blob/master/notebooks/01_week/05_flow.ipynb) Control statements: if, for, while, try statements
+* [**06**](https://nbviewer.jupyter.org/github/rbrezu/PythonBootcamp/blob/master/notebooks/01_week/06_functions.ipynb) Functions
    
 
 
