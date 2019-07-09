@@ -7,18 +7,6 @@ Python is a modern, robust, high level programming language. It is very easy to 
 
 Python, similar to other languages like matlab or R, is interpreted hence runs slowly compared to C++, Fortran or Java. However writing programs in Python is very quick. Python has a very large collection of libraries for everything from scientific computing to web services. It caters for object oriented and functional programming with module system that allows large and complex applications to be developed in Python. 
 
-These lectures are using jupyter notebooks which mix Python code with documentation. The python notebooks can be run on a webserver or stand-alone on a computer.
-
-To give an indication of what Python code looks like, here is a simple bit of code that defines a set $N=\{1,3,4,5,7\}$ and calculates the sum of the squared elements of this set: $$\sum_{i\in N} i^2=100$$
-
-
-```python
-N={1,3,4,5,7}
-print('The sum of ∑_i∈N i*i =',sum( i**2 for i in N ) )
-```
-
-    The sum of ∑_i∈N i*i = 100
-
 ## Installation
 
 You will have a few prerequisites before starting this tutorial:
