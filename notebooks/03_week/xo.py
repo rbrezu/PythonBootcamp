@@ -165,5 +165,72 @@ class XO:
                 print('Bad input retry!!!')
 
 
-xo = XO()
-xo.start_game()
+
+import argparse
+import os
+import sys
+import socket
+
+args = argparse.ArgumentParser()
+args.add_argument('-s', default='server')
+args.add_argument('-host', default='localhost')
+args.add_argument('-port', default='9999', type=int)
+
+ar = args.parse_args()
+
+
+class Game:
+    def __init__(self, type, host, port):
+        self.board = Board()
+        self.type = type
+        self.host = host
+        self.port = port
+        self.player = 'X' if type == 'server' else 'O'
+        self.my_move = type == 'client'
+
+        if type == 'server':
+            self.serve()
+        else:
+            self.connect()
+
+
+    def serve(self):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.bind((self.host, self.port))
+        s.listen(1)
+        conn, addr = s.accept()
+
+        self.s = conn
+
+    def connect(self):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((self.host, self.port))
+        self.s = s
+
+
+    def run(self):
+        while not self.board.game_over():
+            if self.my_move:
+                x, y = [int(x) for x in input('Set move to send: ').split(' ')]
+                player = self.player
+                self.s.sendall('{} {}'.format(x, y).encode('utf-8'))
+            else:
+                x, y = [int(x) for x in self.s.recv(1024).decode('utf-8').split(' ')]
+                player = 'O' if self.player == 'X' else 'X'
+
+            self.my_move = not self.my_move
+            self.board[x, y] = player
+            print (self.board)
+
+
+
+
+game = Game(ar.s, ar.host, ar.port)
+game.run()
+
+
+
+
+#
+# xo = XO()
+# xo.start_game()
