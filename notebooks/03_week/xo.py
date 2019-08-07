@@ -49,16 +49,16 @@ class Board:
         return self.display[item]
 
     def __setitem__(self, key, value):
-        if value not in ['O', 'X']:
-            raise ValueError('Value must be X or O')
+        # if value not in ['O', 'X']:
+        #     raise ValueError('Value must be X or O')
         if not isinstance(key, tuple) or len(key) != 2:
             raise IndexError('Bad input!')
 
         x, y = key
         if x < 0 or x > 2 or y < 0 or y > 2:
             raise IndexError('Input must be between 0 <= x < 3')
-        if self.display[key] != ' ':
-            raise ValueError('Value is already occupied')
+        # if self.display[key] != ' ':
+        #     raise ValueError('Value is already occupied')
 
         self.display[key] = value
 
@@ -91,11 +91,36 @@ class Player:
 
 class ComputerPlayer(Player):
     def get_move(self, board):
-        pass
+        best, x, y = self.minimax(board, self.val)
+        board[x, y] = self.val
 
-    def minimax(self, board, depth, player):
-        # will be added
-        pass
+    def minimax(self, board, player, depth=0):
+        best = -10 if player == 'O' else 10
+        best_x, best_y = None, None
+
+        if board.game_over():
+            type, line, col = board.get_status()
+            if type == 'X':
+                return -10 + depth, best_x, best_y
+            elif type == 'O':
+                return 10 - depth, best_x, best_y
+            else:
+                return 0, best_x, best_y
+
+        empty_cells = board.empty_cells()
+        for x, y in empty_cells:
+            board[x, y] = player
+            val, _, _ = self.minimax(board, 'X' if player == 'O' else 'O', depth + 1)
+            board[x, y] = ' '
+
+            if player == 'O':
+                if val >= best:
+                    best, best_x, best_y = val, x, y
+            else:
+                if val <= best:
+                    best, best_x, best_y = val, x, y
+
+        return best, best_x, best_y
 
 
 class XO:
@@ -108,7 +133,7 @@ class XO:
         self.board.reset()
         self.players = [
             Player('Player 1', 'X'),
-            Player('Player 2', 'O')
+            ComputerPlayer('Player 2', 'O')
         ]
 
         turn = 0
