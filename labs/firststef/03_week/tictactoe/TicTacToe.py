@@ -5,22 +5,60 @@ class Player:
     def __init__(self, name):
         self.name = name
 
-    def get_input(self):
+    def get_input(self, board):
         x = int(input("Enter x:"))
         y = int(input("Enter y:"))
         return x, y
+
+def minimax(board, player, depth):
+    eval_ = board.is_game_over()
+
+    if eval_ == 2:
+        return 10 - depth
+    if eval_ == 1:
+        return -10 + depth
+    if eval_ == 3:
+        return 0
+
+    if player == 2:
+        bestVal = -1000
+        for move in [(x, y) for x in range(0, 3) for y in range(0, 3) if board.matrix[x][y] == 0]:
+            board.matrix[move[0]][move[1]] = 2
+            value = minimax(board, player % 2 + 1, depth + 1)
+            bestVal = max(bestVal, value)
+            board.matrix[move[0]][move[1]] = 0
+        return bestVal
+    else:
+        bestVal = 1000
+        for move in [(x, y) for x in range(0, 3) for y in range(0, 3) if board.matrix[x][y] == 0]:
+            board.matrix[move[0]][move[1]] = 1
+            value = minimax(board, player % 2 + 1, depth + 1)
+            bestVal = min(bestVal, value)
+            board.matrix[move[0]][move[1]] = 0
+        return bestVal
 
 class AI(Player):
 
     def __init__(self, name):
         super().__init__(name)
 
-    def get_input(self):
-        return random.randint(0,3) , random.randint(0,3)
+    def get_input(self, board):
+        savedMove = (-1,-1)
+        savedVal = -1000
+        for move in [(x, y) for x in range(0, 3) for y in range(0, 3) if board.matrix[x][y] == 0]:
+            board.matrix[move[0]][move[1]] = 2
+            moveVal = minimax(board, 1, 0)
+            if moveVal > savedVal:
+                savedVal = moveVal
+                savedMove = move
+            board.matrix[move[0]][move[1]] = 0
+        return savedMove
 
 class Board:
     def __init__(self):
-        self.matrix = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+        self.matrix = [[0, 0, 0],
+                       [0, 0, 0],
+                       [0, 0, 0]]
 
     def set(self, player_key, row, column):
         if row < 0 or row > 2 or column < 0 or column > 2:
@@ -87,9 +125,9 @@ class Game:
             print("Player %d turn:" % pindex)
             coord = (-1, -1)
             if pindex == 1:
-                coord = self.player1.get_input()
+                coord = self.player1.get_input(self.board)
             else:
-                coord = self.player2.get_input()
+                coord = self.player2.get_input(self.board)
 
             if coord[0] > 2 or coord [0] < 0 or coord[1] > 2 or coord [1] < 0:
                 print("Incorrect coordinates")
@@ -103,9 +141,11 @@ class Game:
 
             if state == 1 or state == 2:
                 print("Player %d wins:" % pindex)
+                self.board.draw()
                 break
             elif state == 3:
                 print("The game ended in draw")
+                self.board.draw()
                 break
 
             pindex = pindex % 2 + 1
