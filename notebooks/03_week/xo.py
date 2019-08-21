@@ -222,12 +222,12 @@ class Game:
             self.board[x, y] = player
             print (self.board)
 
-
-
-
 game = Game(ar.s, ar.host, ar.port)
 game.run()
 
+
+# python xo.py -s server
+# python xo.py -s client
 
 
 
